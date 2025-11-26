@@ -82,8 +82,9 @@ I32 binsearch( SV* block, SV* needle, SV* aref_haystack ) {
     I32 mid = ( max - min ) / 2 + min;
     
     /* Fetch value at aref_haystack->[mid] */
+    SV **elp = av_fetch(haystack,mid,0);
     GvSV(agv) = needle;
-    GvSV(bgv) = *av_fetch(haystack,mid,0);  /* Hay */
+    GvSV(bgv) = elp ? *elp : &PL_sv_undef;  /* Hay */
 
     MULTICALL;
     if( SvIV( *PL_stack_sp ) == 1 ) {  /* if ($a<=>$b) > 0 */
@@ -146,8 +147,9 @@ SV* binsearch_pos( SV* block, SV* needle, SV* aref_haystack ) {
     I32 cur = ( high - low ) / 2 + low;
     
     /* Fetch value at aref_haystack->[mid] */
+    SV **elp = av_fetch(haystack,cur,0);
     GvSV(agv) = needle;
-    GvSV(bgv) = *av_fetch(haystack,cur,0);  /* Hay */
+    GvSV(bgv) = elp ? *elp : &PL_sv_undef;  /* Hay */
 
     MULTICALL;
     if( SvIV( *PL_stack_sp ) > 0 ) {  /* if ($a<=>$b) > 0 */
