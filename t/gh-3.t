@@ -31,6 +31,6 @@ sub _coal {
 	my @array;
 	$array[1] = 'A';
 	my $index = binsearch_pos { _coal($a, '') cmp _coal($b, '') } 'B', @array;
-	cmp_ok $index, '==', '2', "binsearch_pos points to one index past end";
+	cmp_ok $index, '==', 2, "binsearch_pos points to one index past end";
 	ok !exists $array[0], "binsearch_pos did not store undef into array[0]";
 }
